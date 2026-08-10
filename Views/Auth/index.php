@@ -1,5 +1,6 @@
-<?php include '../../App/Config/define.php'; 
-include '../../App/Config/db.php'; 
+<?php
+require_once 'App/Config/define.php'; 
+require_once 'App/Config/db.php'; 
 
 $conn = new connection();
 $conn->connect()?>
@@ -13,20 +14,25 @@ $conn->connect()?>
 </head>
 <body>
 	<h1>Login</h1>
-	<div>
-		<form action="" method="post">
-			<label>Correo</label>
-			<input type="text" name="">
-			<br>
-			<label>Contraseña</label>
-			<input type="password" name="">
-			<br>
-			<p>no tienes cuenta? <a href="signup.php">Cree una</a></p>
-			<br>
-			<a href="#">No recuerda su contraseña?</a>
-			<br>
-			<button type="submit">Siguiente</button>
-		</form>
-	</div>
+
+<?php if (isset($error)): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php endif; ?>
+
+<div>
+        <form action="index.php?action=login" method="POST">
+            <label>Correo</label>
+            <input type="email" name="email" required>
+            <br>
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+            <br>
+            <p>¿No tienes cuenta? <a href="index.php?action=register">Crea una</a></p>
+            <br>
+            <a href="#">¿No recuerdas tu contraseña?</a>
+            <br>
+            <button type="submit">Siguiente</button>
+        </form>
+    </div>
 </body>
 </html>

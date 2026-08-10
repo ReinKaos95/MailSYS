@@ -11,7 +11,7 @@ class connection
 	private $dbname = DB_NAME;
 	private $username = DB_USER;
 	private $password = DB_PASS;
-	private $charset = "UTF8";   // antes era "utf8mb4"
+	private $charset = DB_CHARSET;
  	private $port = DB_PORT;
 
  	//Instancia de conexion PDO
@@ -20,7 +20,7 @@ class connection
 	public function connect()
 	{
 		// Data Source Name
-		$dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};client_encoding={$this->charset}";
+		$dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset={$this->charset}";
 
 		$options = [
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,

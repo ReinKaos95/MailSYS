@@ -1,9 +1,23 @@
+<?php
+// Cargar configuraciones iniciales
+require_once 'App/Config/define.php'; 
+require_once 'App/Config/db.php'; 
+require_once 'App/Controllers/authController.php'; 
 
-<?php include 'App/Controllers/mainController.php'; 
-//include '../App/Config/db.php'; 
+$auth = new authController();
 
-$main = new mainController();
-$main->index();
+// Enrutador básico para pruebas rápidas
+$action = $_GET['action'] ?? 'index';
 
-
+switch ($action) {
+	case 'register':
+		$auth->register();
+		break;
+		case 'login':
+			$auth->login();
+			break;
+	default:
+		$auth->index();
+		break;
+}
 ?>

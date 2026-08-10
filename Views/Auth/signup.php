@@ -1,4 +1,4 @@
-<?php include '../../App/Config/define.php'; ?>
+<?php require_once 'App/Config/define.php'; ?>
 
 <!DOCTYPE html>
 <html>
@@ -9,20 +9,18 @@
 </head>
 <body>
 	<h1>Signup</h1>
-	<div>
-		<form action="" method="post">
-			<label>Correo</label>
-			<input type="text" name="">
-			<br>
-			<label>Contraseña</label>
-			<input type="password" name="">
-			<br>
-			<p>tienes cuenta? <a href="index.php">Registrate</a></p>
-			<br>
-			<a href="#">No recuerda su contraseña?</a>
-			<br>
-			<button type="submit">Siguiente</button>
-		</form>
-	</div>
+		<div>
+        <form action="index.php?action=storeUser" method="POST">
+            <label>Correo</label>
+            <input type="email" name="email" required>
+            <br>
+            <label>Contraseña</label>
+            <input type="password" name="password" required>
+            <br>
+            <p>¿Ya tienes cuenta? <a href="index.php">Inicia sesión</a></p>
+            <br>
+            <button type="submit">Registrarme</button>
+        </form>
+    </div>
 </body>
 </html>
