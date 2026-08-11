@@ -1,8 +1,10 @@
 <?php
+
+define('ROOT_PATH', __DIR__ . '/');
 // Cargar configuraciones iniciales
-require_once 'App/Config/define.php'; 
-require_once 'App/Config/db.php'; 
-require_once 'App/Controllers/authController.php'; 
+require_once ROOT_PATH . 'App/Config/define.php';
+require_once ROOT_PATH . 'App/Config/db.php';
+require_once ROOT_PATH . 'App/Controllers/authController.php';
 
 $auth = new authController();
 
@@ -10,14 +12,17 @@ $auth = new authController();
 $action = $_GET['action'] ?? 'index';
 
 switch ($action) {
-	case 'register':
-		$auth->register();
-		break;
-		case 'login':
-			$auth->login();
-			break;
-	default:
-		$auth->index();
-		break;
+    case 'register':
+        $auth->register();
+        break;
+    case 'storeUser':
+        $auth->storeUser();
+        break;
+    case 'login':
+        $auth->login();
+        break;
+    default:
+        $auth->index();
+        break;
 }
 ?>

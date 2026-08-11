@@ -11,20 +11,20 @@ class User
 		$this->db = $conn->connect();
 	}
 
-	public function getUserByEmail($email)
+	public function getUserByEmail($correo)
 	{
-		$stmt = $this->db->prepare("SELECT * FROM usuarios WHERE email = :email LIMIT 1");
-		$stmt->execute(['email' => $email]);
+		$stmt = $this->db->prepare("SELECT * FROM usuarios WHERE correo = :correo LIMIT 1");
+		$stmt->execute(['correo' => $correo]);
 		return $stmt->fetch();
 	}
 
-	public function createUser()
+	public function createUser($correo, $password)
 	{
 		$passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-		$stmt = $this->db->prepare("INSERT INTO usuarios (correo, password) VALUES (:email, :password)");
-		$stmt->execute([
-			'email' => $email,
+		$stmt = $this->db->prepare("INSERT INTO usuarios (correo, password) VALUES (:correo, :password)");
+		return $stmt->execute([
+			'correo' => $correo,
 			'password' => $passwordHash
 		]);
 	}

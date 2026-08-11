@@ -9,6 +9,16 @@
 </head>
 <body>
 	<h1>Signup</h1>
+	<!-- Mostrar errores de validación si existen -->
+    <?php if (!empty($errors)): ?>
+        <div style="color: red;">
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li><?php echo $error; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
 		<div>
         <form action="index.php?action=storeUser" method="POST">
             <label>Correo</label>
