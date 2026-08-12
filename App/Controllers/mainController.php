@@ -1,15 +1,12 @@
 <?php 
 
-/**
- * 
- */
 class mainController
 {
 	
 
 public function index()
 {
-	include 'Views/index.php';
+	require_once ROOT_PATH . 'Views/index.php';
 }
 
 

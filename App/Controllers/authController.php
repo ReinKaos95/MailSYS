@@ -22,22 +22,24 @@ public function index()
 
 public function login()
 {
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		$email = trim($_POST['email'] ?? '');
-		$password = trim($_POST['password'] ?? '');
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = trim($_POST['email'] ?? '');
+        $password = trim($_POST['password'] ?? '');
 
-		$user =$this->userModel->getUserByEmail($email);
+        $user = $this->userModel->getUserByEmail($email);
 
-		if ($user && password_verify($password, $user['password'])) {
-			session_start();
-			$_SESSION['user_id'] = $user['id'];
-			header('Location: index.php?action=dashboard');
-		} else {
-			$error = "Credenciales incorrectas";
-			require_once 'Views/Auth/index.php';
-		}
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_email'] = $user['correo'];
 
-	}
+            // Redirigir a la acción que muestra Views/index.php
+            header('Location: index.php?action=dashboard');
+            exit;
+        } else {
+            $error = "Credenciales incorrectas";
+            require_once ROOT_PATH . 'App/Views/Auth/index.php';
+        }
+    }
 }
 
 public function register()
@@ -83,6 +85,25 @@ public function storeUser()
 			
 		}
 	}
+}
+
+
+public function logout()
+{
+	$_SESSION = array();
+
+	if (ini_get("session.use_cookies")) {
+		$params = session_get_cookie_params();
+		setcookie(session_name(), '', time() - 42000,
+			$params["path"], $params["domain"],
+            $params["secure"], $params["httponly"]
+		);
+	}
+
+	session_destroy();
+
+	header('Location: index.php');
+	exit;
 }
 
 }

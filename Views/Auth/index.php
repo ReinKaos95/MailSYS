@@ -1,6 +1,7 @@
 <?php
-require_once 'App/Config/define.php'; 
-require_once 'App/Config/db.php'; 
+require_once ROOT_PATH . 'App/Config/define.php'; 
+require_once ROOT_PATH . 'App/Config/db.php'; 
+require_once ROOT_PATH . 'Views/Layouts/title.php'; 
 
 $conn = new connection();
 $conn->connect()?>
