@@ -26,18 +26,20 @@ public function login()
         $email = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
 
+
         $user = $this->userModel->getUserByEmail($email);
 
         if ($user && password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['correo'];
+            $_SESSION['user_name'] = $user['nombre'];
 
             // Redirigir a la acción que muestra Views/index.php
             header('Location: index.php?action=dashboard');
             exit;
         } else {
             $error = "Credenciales incorrectas";
-            require_once ROOT_PATH . 'App/Views/Auth/index.php';
+            require_once ROOT_PATH . 'Views/Auth/index.php';
         }
     }
 }

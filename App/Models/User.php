@@ -29,6 +29,31 @@ class User
 		]);
 	}
 
+
+	public function updateUser($userId, $nuevoNombre = null, $nuevaClave)
+	{
+		$params = ['id' => $userId];
+		$fields = [];
+
+		if (!empty($nuevoNombre)) {
+			$fields[] = "nombre = :nombre";
+			$params['nombre'] = $nuevoNombre;
+		}
+
+		if (!empty($nuevaClave)) {
+			$fields[] = "password = :password";
+			$params['password'] = password_hash($nuevaClave, PASSWORD_DEFAULT);
+		}
+
+		if (empty($fields)) {
+			return false;
+		}
+
+		$sql = "UPDATE usuarios SET " . implode(', ', $fields) . " WHERE id = :id";
+		$stmt = $this->db->prepare($sql);
+		return $stmt->execute($params);
+	}
+
 }
 
  ?>

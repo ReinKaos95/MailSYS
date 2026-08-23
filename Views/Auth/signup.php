@@ -1,6 +1,6 @@
 <?php require_once ROOT_PATH . 'App/Config/define.php'; ?>
 
-<?php require_once ROOT_PATH . 'Views/Layouts/title.php'; ?>
+<?php require_once ROOT_PATH . 'Views/Layouts/main.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
