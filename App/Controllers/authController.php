@@ -33,6 +33,7 @@ public function login()
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['correo'];
             $_SESSION['user_name'] = $user['nombre'];
+            $_SESSION['user_role'] = $user['rol_nombre']; // 'superadmin' o 'usuario'
 
             // Redirigir a la acción que muestra Views/index.php
             header('Location: index.php?action=dashboard');

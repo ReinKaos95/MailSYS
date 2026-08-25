@@ -13,10 +13,10 @@ use Carbon\Carbon;
 Carbon::setLocale('es');
 date_default_timezone_set('America/Caracas');
 
-echo "Hora actual: " . Carbon::now()->format('d/m/Y h:i A'); 
+//echo "Hora actual: " . Carbon::now()->format('d/m/Y h:i A'); 
 // Imprime algo como: Hora actual: 23/08/2026 06:30 PM
 
-echo "<br>Hace cuánto: " . Carbon::now()->subHours(3)->diffForHumans();
+//echo "<br>Hace cuánto: " . Carbon::now()->subHours(3)->diffForHumans();
 
 require_once ROOT_PATH . 'App/Config/define.php';
 require_once ROOT_PATH . 'App/Config/db.php';
@@ -71,6 +71,17 @@ switch ($action) {
     case 'getNotes':
         if (!isset($_SESSION['user_id'])) { header('Location: index.php'); exit; }
         $agenda->getNotes();
+        break;
+    case 'adminUsers':
+        if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'superadmin') {
+        header('Location: index.php?action=dashboard');
+        exit;
+        }
+        $profile->adminUsers(); // Método en profileController
+        break;
+    case 'storeUserByAdmin':
+        if (!isset($_SESSION['user_id'])) { header('Location: index.php'); exit; }
+        $profile->storeUserByAdmin();
         break;
     default:
         $auth->index();
