@@ -1,19 +1,19 @@
-	<div class="y2k-main-container">
-		<aside class="y2k-sidebar">
-			<ul>
-				<li>📥 Bandeja de Entrada</li>
-				<li>🚫 Correo no deseado</li>
-				<li>📝 Borrador</li>
-				<li>📤 Elementos enviados</li>
-				<li>🗑️ Elementos eliminados</li>
-				<li>📁 Archivo</li>
-			</ul>
-		</aside>
+<div class="main-container">
+    <aside class="sidebar">
+        <ul>
+            <li class="active">📥 Bandeja de Entrada</li>
+            <li>🚫 Correo no deseado</li>
+            <li>📝 Borrador</li>
+            <li>📤 Elementos enviados</li>
+            <li>🗑️ Elementos eliminados</li>
+            <li>📁 Archivo</li>
+        </ul>
+    </aside>
 
-		<main class="y2k-content-area">
-			<div class="y2k-window-header" style="margin: -20px -20px 20px -20px;">
-				<span>Bandeja de Entrada</span>
-			</div>
-			<p>Selecciona un correo para comenzar a leer...</p>
-		</main>
-	</div>
+    <main class="content-area">
+        <div class="window-header">
+            <h2>Bandeja de Entrada</h2>
+        </div>
+        <p style="color: var(--text-muted);">Selecciona un correo para comenzar a leer...</p>
+    </main>
+</div>

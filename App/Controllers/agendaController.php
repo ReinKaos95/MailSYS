@@ -1,7 +1,9 @@
 <?php 
 
-/**
- * 
+/* 
+
+Controlador que lleba registro
+
  */
 class agendaController 
 {
@@ -35,27 +37,27 @@ class agendaController
 		}
 	}
 
-// En App/Controllers/agendaController.php
 
-public function getNotes()
-{
-    // Limpiar cualquier salida previa que pueda romper el JSON
-    if (ob_get_length()) ob_clean(); 
 
-    header('Content-Type: application/json');
+	public function getNotes()
+	{
+	    // Limpiar cualquier salida previa que pueda romper el JSON
+	    if (ob_get_length()) ob_clean(); 
 
-    $userId = $_SESSION['user_id'] ?? null;
-    $fecha = $_GET['fecha'] ?? date('Y-m-d');
+	    header('Content-Type: application/json');
 
-    if (!$userId) {
-        echo json_encode([]);
-        exit;
-    }
+	    $userId = $_SESSION['user_id'] ?? null;
+	    $fecha = $_GET['fecha'] ?? date('Y-m-d');
 
-    $notas = $this->agendaModel->getNotesByDate($userId, $fecha);
-    echo json_encode($notas ?: []);
-    exit;
-}
+	    if (!$userId) {
+	        echo json_encode([]);
+	        exit;
+	    }
+
+	    $notas = $this->agendaModel->getNotesByDate($userId, $fecha);
+	    echo json_encode($notas ?: []);
+	    exit;
+	}
 }
 
  ?>

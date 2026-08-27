@@ -1,5 +1,7 @@
 <?php 
 
+// Definicion de variables 
+
 define('Title', 'MailSYS');
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'MailSYS');

@@ -1,28 +1,24 @@
-
-
-
 <?php include 'Layouts/main.php'; ?>
 
-<div class="y2k-app-layout">
+<div class="app-layout">
+    <!-- Navbar arriba del todo -->
+    <?php include 'Layouts/navbar.php'; ?>
 
-<?php include 'Layouts/navbar.php'; ?>
-
-<?php include 'Layouts/sidebar.php'; ?>
-
+    <!-- Contenedor principal (Sidebar + Bandeja) -->
+    <?php include 'Layouts/sidebar.php'; ?>
 </div>
 
-<!-- Modal Y2K del Calendario Agenda -->
+<!-- Modal de la Agenda -->
 <?php include 'Layouts/modal.php'; ?>
 
 <script>
-	function toggleCalendarModal(show) {
-		const modal = document.getElementById('calendarModal');
-		modal.classList.toggle('active', show);
-	}
+    function toggleCalendarModal(show) {
+        const modal = document.getElementById('calendarModal');
+        if (modal) {
+            modal.style.display = show ? 'flex' : 'none';
+        }
+    }
 </script>
-
-</body>
-</html>
 
 </body>
 </html>

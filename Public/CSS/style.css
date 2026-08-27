@@ -1,0 +1,283 @@
+/* ============================================================
+   MAILSYS - CORPORATE & ACCESSIBLE UI STYLESHEET
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Paleta de Colores Corporativa */
+  --primary: #1e40af;         /* Azul Corporativo */
+  --primary-hover: #1d4ed8;
+  --primary-light: #eff6ff;
+  
+  --surface: #ffffff;
+  --background: #f8fafc;
+  --border: #e2e8f0;
+  --border-focus: #3b82f6;
+
+  /* Texto y Lecturabilidad */
+  --text-main: #0f172a;       /* Alto contraste para lectura */
+  --text-muted: #64748b;
+  --text-white: #ffffff;
+
+  /* Estados */
+  --success-bg: #f0fdf4;
+  --success-border: #bbf7d0;
+  --success-text: #166534;
+
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --error-text: #991b1b;
+
+  /* Sombras y Bordes */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+/* --- Layout Principal --- */
+.app-layout {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* --- Navbar / Encabezado --- */
+.navbar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar h1 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.navbar li {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.user-badge {
+  background: var(--primary-light);
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+/* --- Contenedor de 2 Columnas (Dashboard / Config) --- */
+.main-container {
+  display: flex;
+  gap: 24px;
+}
+
+/* Menú Lateral (Sidebar) */
+aside.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+}
+
+aside.sidebar ul {
+  list-style: none;
+}
+
+aside.sidebar li {
+  padding: 10px 16px;
+  margin-bottom: 4px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+aside.sidebar li:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+aside.sidebar li.active {
+  background: var(--primary);
+  color: var(--text-white);
+  font-weight: 600;
+}
+
+/* Área de Contenido Principal */
+.content-area {
+  flex-grow: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  min-height: 400px;
+}
+
+.window-header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+
+.window-header h2, 
+.window-header span {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* --- Tarjetas / Card Layout (Para Login y Registro) --- */
+.card-auth {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 32px;
+}
+
+.card-auth h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* --- Formularios Accesibles --- */
+form label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-top: 16px;
+  margin-bottom: 6px;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="password"],
+select {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* --- Botones --- */
+button {
+  width: 100%;
+  background: var(--primary);
+  color: var(--text-white);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background: var(--primary-hover);
+}
+
+/* --- Tablas Limpias --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  background: var(--background);
+  color: var(--text-muted);
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+/* --- Alertas de Estado --- */
+.alert-success {
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  color: var(--success-text);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.alert-error {
+  background-color: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error-text);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+/* --- Pestañas Dinámicas --- */
+.tab-content {
+  display: none !important;
+}
+
+.tab-content.active {
+  display: block !important;
+}

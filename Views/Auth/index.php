@@ -17,43 +17,32 @@ $conn->connect()?>
 </head>
 <body>
 
-        <div class="y2k-window">
-                <div class="y2k-window-header">
-                        <span>MailSYS - Login.exe</span>
-                        <div class="y2k-window-controls">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                        </div>
-                </div>
+<div class="card-auth">
+    <h1>Iniciar Sesión</h1>
+    <p style="text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Ingresa a tu cuenta corporativa de MailSYS</p>
 
-                <div class="y2k-window-body">
-                        <h1>Login</h1>
-
-                        <?php if (isset($error)): ?>
-                                <div class="y2k-alert-error">
-                                        <p style="margin: 0;"><?php echo $error; ?></p>
-                                </div>
-                        <?php endif; ?>
-
-                        <form action="index.php?action=login" method="POST">
-                                <label>Correo Electrónico:</label>
-                                <input type="email" name="email" placeholder="usuario@mailsys.com" required>
-
-                                <label>Contraseña:</label>
-                                <input type="password" name="password" required>
-
-                                <button type="submit">Siguiente &gt;&gt;</button>
-                        </form>
-
-                        <div style="margin-top: 20px; text-align: center;">
-                                <p style="font-size: 13px; margin-bottom: 8px;">
-                                        ¿No tienes cuenta? <a href="index.php?action=register">Crea una</a>
-                                </p>
-                                <a href="#" style="font-size: 12px;">¿No recuerdas tu contraseña?</a>
-                        </div>
-                </div>
+    <?php if (isset($error)): ?>
+        <div class="alert-error">
+            <p style="margin: 0;"><?php echo $error; ?></p>
         </div>
+    <?php endif; ?>
+
+    <form action="index.php?action=login" method="POST">
+        <label>Correo Electrónico</label>
+        <input type="email" name="email" placeholder="usuario@mailsys.com" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Ingresar</button>
+    </form>
+
+    <div style="margin-top: 24px; text-align: center; font-size: 14px;">
+        <p style="color: var(--text-muted);">
+            ¿No tienes cuenta? <a href="index.php?action=register" style="color: var(--primary); font-weight: 600;">Crea una aquí</a>
+        </p>
+    </div>
+</div>
 
 </body>
 </html>
