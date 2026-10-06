@@ -33,6 +33,19 @@ class agenda
 			'descripcion' => $descripcion
 		]);
 	}
+
+	public function getNotesByUser($userId)
+	{
+	    $stmt = $this->db->prepare("
+	        SELECT id, titulo, fecha, hora, descripcion, created_at 
+	        FROM agenda_eventos 
+	        WHERE user_id = :user_id 
+	        ORDER BY fecha ASC, hora ASC
+	    ");
+	    $stmt->execute(['user_id' => $userId]);
+	    return $stmt->fetchAll();
+	}
+	
 }
 
  ?>

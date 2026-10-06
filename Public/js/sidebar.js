@@ -40,7 +40,10 @@ document.addEventListener('DOMContentLoaded', function () {
     } else if (activeTab === 'crear') {
         const btn = document.querySelectorAll('.tab-btn')[2];
         switchTab('tab-crear', btn);
-    } else {
+    } else if (activeTab === 'devlog') {
+    const btnDev = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.innerText.includes('DevLog'));
+    if (btnDev) switchTab('tab-devlog', btnDev);
+    }  else {
         // Por defecto mostrar 'Mi Cuenta'
         const btn = document.querySelector('.tab-btn');
         switchTab('tab-cuenta', btn);

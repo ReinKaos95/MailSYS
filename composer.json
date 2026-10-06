@@ -1,0 +1,17 @@
+{
+    "name": "indatech/mail-sys",
+    "autoload": {
+        "psr-4": {
+            "Indatech\\MailSys\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Walter Gutierrez",
+            "email": "waltergutierrez618@hotmail.com"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^3.14"
+    }
+}

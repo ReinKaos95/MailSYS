@@ -1,15 +1,27 @@
 <?php 
+
 session_start();
 
 define('ROOT_PATH', __DIR__ . '/');
 
-// Importar Autoloader de Libs (Carbon)
-if (file_exists(ROOT_PATH . 'App/Libs/vendor/autoload.php')) {
-    require_once ROOT_PATH . 'App/Libs/vendor/autoload.php';
+// 1. Definir la ruta al autoloader de Composer
+$composerAutoload = ROOT_PATH . 'App/Libs/vendor/autoload.php';
+
+// Si por algún motivo se instaló en la raíz, usamos un respaldo:
+if (!file_exists($composerAutoload)) {
+    $composerAutoload = ROOT_PATH . 'vendor/autoload.php';
 }
 
-// Configurar la zona horaria y el idioma local por defecto
+// 2. Requerir el autoloader antes de cualquier uso de clases externas
+if (file_exists($composerAutoload)) {
+    require_once $composerAutoload;
+} else {
+    die('Error: No se encontró el autoloader de Composer en: ' . $composerAutoload);
+}
+
+// 3. Ya disponible Carbon
 use Carbon\Carbon;
+
 Carbon::setLocale('es');
 date_default_timezone_set('America/Caracas');
 
@@ -82,6 +94,10 @@ switch ($action) {
     case 'storeUserByAdmin':
         if (!isset($_SESSION['user_id'])) { header('Location: index.php'); exit; }
         $profile->storeUserByAdmin();
+        break;
+    case 'storeDevLog':
+        if (!isset($_SESSION['user_id'])) { header('Location: index.php'); exit; }
+        $profile->storeDevLog();
         break;
     default:
         $auth->index();

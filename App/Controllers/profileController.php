@@ -18,6 +18,10 @@ class profileController
 	public function index()
 	{
 	    $user = $this->userModel->getUserByEmail($_SESSION['user_email'] ?? '');
+	// Cargar notas del usuario
+    require_once ROOT_PATH . 'App/Models/Agenda.php';
+    $agendaModel = new Agenda();
+    $notas = $agendaModel->getNotesByUser($_SESSION['user_id'] ?? 0);
 	    require_once ROOT_PATH . 'Views/Profile/index.php';
 	}
 
@@ -25,14 +29,43 @@ class profileController
     {
         $user = $this->userModel->getUserByEmail($_SESSION['user_email'] ?? '');
         $listaUsuarios = [];
+        $devlogs = [];
 
         // Si es superadmin, cargamos la lista de usuarios para la pestaña de gestión
         if (($_SESSION['user_role'] ?? '') === 'superadmin') {
-            $listaUsuarios = $this->userModel->getAllUsers();
+            $listaUsuarios = $this->userModel->getAllUsers() ?: [];
+
+		require_once ROOT_PATH . 'App/Models/DevLog.php';
+        $devLogModel = new DevLog();
+        $devlogs = $devLogModel->getAllLogs() ?: [];
         }
 
         require_once ROOT_PATH . 'Views/Profile/config.php';
     }
+
+public function storeDevLog()
+{
+    if (($_SESSION['user_role'] ?? '') !== 'superadmin') {
+        header('Location: index.php?action=dashboard');
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $version = trim($_POST['version'] ?? '');
+        $titulo  = trim($_POST['titulo'] ?? '');
+        $desc    = trim($_POST['descripcion'] ?? '');
+        $tipo    = $_POST['tipo'] ?? 'update';
+
+        if (!empty($version) && !empty($titulo) && !empty($desc)) {
+            require_once ROOT_PATH . 'App/Models/DevLog.php';
+            $devLogModel = new DevLog();
+            $devLogModel->createLog($version, $titulo, $desc, $tipo);
+        }
+
+        header('Location: index.php?action=config&tab=devlog&status=devlog_created');
+        exit;
+    }
+}
 
 // En App/Controllers/profileController.php
 

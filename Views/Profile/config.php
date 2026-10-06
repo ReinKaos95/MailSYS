@@ -25,6 +25,7 @@
                 <?php if (($_SESSION['user_role'] ?? '') === 'superadmin'): ?>
                     <li class="tab-btn" onclick="switchTab('tab-usuarios', this)">🛠️ Gestión de Usuarios</li>
                     <li class="tab-btn" onclick="switchTab('tab-crear', this)">➕ Crear Nuevo Usuario</li>
+                    <li class="tab-btn" onclick="switchTab('tab-devlog', this)">📋 DevLog / Versiones</li>
                 <?php endif; ?>
             </ul>
         </aside>
@@ -132,6 +133,66 @@
                     <button type="submit">Registrar Usuario</button>
                 </form>
             </div>
+
+<!-- PANEL 4: DEVLOG (Superadmin) -->
+<div id="tab-devlog" class="tab-content">
+    <div class="window-header">
+        <h2>Registro de Versiones (DevLog)</h2>
+    </div>
+
+    <!-- Formulario para publicar versión -->
+    <form action="index.php?action=storeDevLog" method="POST" style="background: var(--background); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 24px;">
+        <h3 style="font-size: 15px; margin-bottom: 12px;">Publicar Nueva Versión</h3>
+        
+        <div style="display: flex; gap: 12px;">
+            <div style="width: 30%;">
+                <label>Versión (ej: v1.1.0)</label>
+                <input type="text" name="version" placeholder="v1.0.0" required>
+            </div>
+            <div style="width: 70%;">
+                <label>Título del Cambio</label>
+                <input type="text" name="titulo" placeholder="Migración a UI Corporativa" required>
+            </div>
+        </div>
+
+        <label>Tipo de Actualización</label>
+        <select name="tipo">
+            <option value="feature">✨ Característica Nueva (Feature)</option>
+            <option value="fix">🐛 Corrección de Errores (Bug Fix)</option>
+            <option value="update">🚀 Mejora General (Update)</option>
+        </select>
+
+        <label>Detalles / Registro de Cambios</label>
+        <textarea name="descripcion" rows="3" required style="width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); outline: none; font-size: 14px; resize: vertical;"></textarea>
+
+        <button type="submit" style="margin-top: 12px;">Guardar Versión</button>
+    </form>
+
+    <!-- Historial de Versiones -->
+    <div class="window-header">
+        <h3 style="font-size: 15px;">Historial del Sistema</h3>
+    </div>
+
+    <?php if (!empty($devlogs) && is_array($devlogs)): ?>
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+            <?php foreach ($devlogs as $log): ?>
+                <div style="border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; background: var(--surface);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                        <div>
+                            <span class="user-badge" style="font-size: 12px; margin-right: 8px;"><?php echo htmlspecialchars($log['version']); ?></span>
+                            <strong><?php echo htmlspecialchars($log['titulo']); ?></strong>
+                        </div>
+                        <span style="font-size: 12px; color: var(--text-muted);"><?php echo htmlspecialchars(substr($log['created_at'], 0, 10)); ?></span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--text-muted); white-space: pre-line; margin-top: 4px;"><?php echo htmlspecialchars($log['descripcion']); ?></p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p style="color: var(--text-muted); font-size: 14px;">No hay registros de versiones cargados.</p>
+    <?php endif; ?>
+</div>
+            
             <?php endif; ?>
 
         </main>
