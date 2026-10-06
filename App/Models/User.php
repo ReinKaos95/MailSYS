@@ -60,7 +60,7 @@ class User
 	    ]);
 	}
 
-	public function storeUserByAdmin()
+	/* public function storeUserByAdmin()
     {
         if (($_SESSION['user_role'] ?? '') !== 'superadmin') {
             header('Location: index.php?action=dashboard');
@@ -80,30 +80,58 @@ class User
             header('Location: index.php?action=config&tab=usuarios&status=created');
             exit;
         }
-    }
+    }*/
 
-	public function updateUser($userId, $nuevoNombre = null, $nuevaClave)
+	public function updateUser($userId, $datos = []) 
 	{
-		$params = ['id' => $userId];
-		$fields = [];
+	    $fields = [];
+	    $params = ['id' => $userId];
 
-		if (!empty($nuevoNombre)) {
-			$fields[] = "nombre = :nombre";
-			$params['nombre'] = $nuevoNombre;
-		}
+	    if (!empty($datos['nombre'])) {
+	        $fields[] = "nombre = :nombre";
+	        $params['nombre'] = $datos['nombre'];
+	    }
 
-		if (!empty($nuevaClave)) {
-			$fields[] = "password = :password";
-			$params['password'] = password_hash($nuevaClave, PASSWORD_DEFAULT);
-		}
+	    if (!empty($datos['password'])) {
+	        $fields[] = "password = :password";
+	        $params['password'] = password_hash($datos['password'], PASSWORD_DEFAULT);
+	    }
 
-		if (empty($fields)) {
-			return false;
-		}
+	    if (isset($datos['foto'])) {
+	        $fields[] = "foto = :foto";
+	        $params['foto'] = $datos['foto'];
+	    }
 
-		$sql = "UPDATE usuarios SET " . implode(', ', $fields) . " WHERE id = :id";
-		$stmt = $this->db->prepare($sql);
-		return $stmt->execute($params);
+	    if (isset($datos['seccion_trabajo'])) {
+	        $fields[] = "seccion_trabajo = :seccion_trabajo";
+	        $params['seccion_trabajo'] = $datos['seccion_trabajo'];
+	    }
+
+	    if (!empty($datos['fecha_nacimiento'])) {
+	        $fields[] = "fecha_nacimiento = :fecha_nacimiento";
+	        $params['fecha_nacimiento'] = $datos['fecha_nacimiento'];
+	    }
+
+	    if (!empty($datos['cedula'])) {
+	        $fields[] = "cedula = :cedula";
+	        $params['cedula'] = $datos['cedula'];
+	    }
+
+	    if (empty($fields)) {
+	        return false;
+	    }
+
+	    $sql = "UPDATE usuarios SET " . implode(', ', $fields) . " WHERE id = :id";
+	    $stmt = $this->db->prepare($sql);
+	    return $stmt->execute($params);
+	}
+
+	// Método utilitario para verificar si la cédula ya pertenece a otro usuario
+	public function isCedulaTaken($cedula, $currentUserId) 
+	{
+	    $stmt = $this->db->prepare("SELECT id FROM usuarios WHERE cedula = :cedula AND id != :id LIMIT 1");
+	    $stmt->execute(['cedula' => $cedula, 'id' => $currentUserId]);
+	    return (bool) $stmt->fetch();
 	}
 
 }

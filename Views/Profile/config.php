@@ -46,24 +46,69 @@
                 </div>
             <?php endif; ?>
 
-            <!-- PANEL 1: EDITAR MI CUENTA -->
-            <div id="tab-cuenta" class="tab-content active">
-                <div class="window-header">
-                    <h2>Perfil de Usuario</h2>
-                </div>
-                <form action="index.php?action=updateProfile" method="POST">
-                    <label>Nombre de Usuario</label>
-                    <input type="text" name="nombre" value="<?php echo htmlspecialchars($user['nombre'] ?? ''); ?>" placeholder="Ingresa tu nombre completo">
+<!-- PANEL 1: EDITAR MI CUENTA -->
+<div id="tab-cuenta" class="tab-content active">
+    <div class="window-header">
+        <h2>Perfil de Usuario</h2>
+    </div>
 
-                    <label>Correo Electrónico (No editable)</label>
-                    <input type="email" value="<?php echo htmlspecialchars($user['correo'] ?? ''); ?>" disabled style="background: var(--background); cursor: not-allowed;">
+    <!-- Alertas de error/éxito -->
+    <?php if (isset($_GET['error'])): ?>
+        <div class="alert-error" style="background: #fee2e2; color: #991b1b; padding: 10px; border-radius: 6px; margin-bottom: 15px;">
+            <?php 
+                switch ($_GET['error']) {
+                    case 'cedula_invalida': echo 'El formato de la cédula no es válido (ej: V-12345678).'; break;
+                    case 'cedula_duplicada': echo 'Esta cédula ya se encuentra registrada por otro usuario.'; break;
+                    case 'menor_edad': echo 'Debes ser mayor de 18 años.'; break;
+                    case 'foto_formato': echo 'Solo se permiten imágenes JPG, PNG o WEBP.'; break;
+                    case 'foto_tamano': echo 'La imagen debe pesar menos de 2 MB.'; break;
+                    default: echo 'Ocurrió un error al guardar los cambios.'; break;
+                }
+            ?>
+        </div>
+    <?php endif; ?>
 
-                    <label>Nueva Contraseña (Opcional)</label>
-                    <input type="password" name="password" placeholder="••••••••">
-
-                    <button type="submit">Guardar Cambios</button>
-                </form>
+    <form action="index.php?action=updateProfile" method="POST" enctype="multipart/form-data">
+        
+        <!-- Previsualización de Foto -->
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+            <img src="<?php echo !empty($user['foto']) ? htmlspecialchars($user['foto']) : 'public/images/default-avatar.png'; ?>" 
+                 alt="Foto de Perfil" 
+                 style="width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);">
+            <div>
+                <label style="margin: 0;">Foto de Perfil</label>
+                <input type="file" name="foto" accept="image/png, image/jpeg, image/webp" style="margin-top: 5px;">
             </div>
+        </div>
+
+        <label>Nombre de Usuario</label>
+        <input type="text" name="nombre" value="<?php echo htmlspecialchars($user['nombre'] ?? ''); ?>" placeholder="Ingresa tu nombre completo">
+
+        <label>Cédula de Identidad</label>
+        <input type="text" name="cedula" value="<?php echo htmlspecialchars($user['cedula'] ?? ''); ?>" placeholder="Ej: V-12345678">
+
+        <label>Sección / Área de Trabajo</label>
+        <select name="seccion_trabajo">
+            <option value="">-- Seleccionar Área --</option>
+            <option value="Administración" <?php echo ($user['seccion_trabajo'] ?? '') === 'Administración' ? 'selected' : ''; ?>>Administración</option>
+            <option value="Sistemas / TI" <?php echo ($user['seccion_trabajo'] ?? '') === 'Sistemas / TI' ? 'selected' : ''; ?>>Sistemas / TI</option>
+            <option value="Recursos Humanos" <?php echo ($user['seccion_trabajo'] ?? '') === 'Recursos Humanos' ? 'selected' : ''; ?>>Recursos Humanos</option>
+            <option value="Ventas" <?php echo ($user['seccion_trabajo'] ?? '') === 'Ventas' ? 'selected' : ''; ?>>Ventas</option>
+            <option value="Operaciones" <?php echo ($user['seccion_trabajo'] ?? '') === 'Operaciones' ? 'selected' : ''; ?>>Operaciones</option>
+        </select>
+
+        <label>Fecha de Nacimiento</label>
+        <input type="date" name="fecha_nacimiento" value="<?php echo htmlspecialchars($user['fecha_nacimiento'] ?? ''); ?>">
+
+        <label>Correo Electrónico (No editable)</label>
+        <input type="email" value="<?php echo htmlspecialchars($user['correo'] ?? ''); ?>" disabled style="background: var(--background); cursor: not-allowed;">
+
+        <label>Nueva Contraseña (Opcional)</label>
+        <input type="password" name="password" placeholder="Dejar en blanco para mantener la actual">
+
+        <button type="submit" style="margin-top: 15px;">Guardar Cambios</button>
+    </form>
+</div>
 
             <!-- PANEL 2: GESTIÓN DE USUARIOS (Superadmin) -->
             <?php if (($_SESSION['user_role'] ?? '') === 'superadmin'): ?>
